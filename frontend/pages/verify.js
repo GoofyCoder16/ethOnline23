@@ -35,16 +35,9 @@ const handleNewNotification = () => {
   })
 }
 const router = useRouter();
-useEffect(() => {
-  if (responseBytes) {
-    const { param1 } = router.query;
+const youtubeURL = `https://www.youtube.com/watch?v=${storedInitialParam1}`;
 
-    if (param1) {
-      const youtubeURL = `https://www.youtube.com/watch?v=${paramValue}`;
-      window.location.href = youtubeURL;
-    }
-  }
-}, [responseBytes, router.query.paramValue]);
+
   return (
     <div>
       <Header />
@@ -52,7 +45,7 @@ useEffect(() => {
         <div>
           {supportedChains.includes(parseInt(chainId).toString()) ? (
             <div className="flex flex-row">
-<SismoConnectButton
+{!responseBytes ? (<SismoConnectButton
               config={SismoConnectConfig}
               auth={{authType: AuthType.GITHUB}}
               claim={{ 
@@ -63,9 +56,13 @@ useEffect(() => {
               signature={{message: "Sign this message (Your identity will remain anonymous.)"}}
               onResponseBytes={(responseBytes) => {
                 setResponseBytes(responseBytes);
+              {<p>Redirecting to video page...</p>}
+                setTimeout(() => {
+                  window.location.href = youtubeURL;
+                }, 2000);
               }}
               text={"Verify your Credentials.."}
-            />
+            />):null}
             </div>
           ) : (
             <div>{`Please switch to a supported chainId. The supported Chain Ids are: ${supportedChains}`}</div>
@@ -77,3 +74,4 @@ useEffect(() => {
     </div>
   );
 }
+var storedInitialParam1="mOtULdszHqY";

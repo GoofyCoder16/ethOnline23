@@ -167,6 +167,9 @@ const generateSTYLES = () => {
       margin-left: -1000px;
     }
   }
+  .c{
+    font-size: 50px;
+  }
    </style>`;
 };
 
@@ -182,7 +185,7 @@ const generateHTML = () => {
       <div class="cloud x5"></div>
   </div>
   <div class='c'>
-You are not authorized to view it.
+You are not authorized to view it. Click on AnonYSurf extension.
   </div>
    `;
 

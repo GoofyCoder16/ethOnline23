@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const currentVideo = queryParameters.get("v");
   const container = document.querySelector(".main");
   if (activeTab.url.includes("youtube.com/watch")) {
-    if(currentVideo=="mOtULdszHqY"){ container.innerHTML = '<button id="redirectButton">Redirect Link</button>';
+    if(currentVideo=="mOtULdszHqY"){ container.innerHTML = '<div class="text">You must have more than <span class="bold">1 contributions</span> in <span class="bold">ShieldFi/ShieldFi_superhack</span></div><button id="redirectButton" class="button button2">Verify</button>';
     document
       .getElementById("redirectButton")
       .addEventListener("click", function () {

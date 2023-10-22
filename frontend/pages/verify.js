@@ -44,8 +44,10 @@ const youtubeURL = `https://www.youtube.com/watch?v=${storedInitialParam1}`;
       {isWeb3Enabled ? (
         <div>
           {supportedChains.includes(parseInt(chainId).toString()) ? (
-            <div className="flex flex-row">
-{!responseBytes ? (<SismoConnectButton
+            <div className="flex justify-center rounded overflow-hidden shadow-lg p-8 w-1/2 ml-auto mr-auto">
+ <div>Verify your credentials using Sismo anonymously. 
+To be eligible to watch the video you must have more than 2 contributions in <span class="font-bold">ShieldFi/ShieldFi_superhack</span></div>
+{!responseBytes ? (<div class="pt-6"><SismoConnectButton
               config={SismoConnectConfig}
               auth={{authType: AuthType.GITHUB}}
               claim={{ 
@@ -62,7 +64,7 @@ const youtubeURL = `https://www.youtube.com/watch?v=${storedInitialParam1}`;
                 }, 2000);
               }}
               text={"Verify your Credentials.."}
-            />):null}
+            /></div>):null}
             </div>
           ) : (
             <div>{`Please switch to a supported chainId. The supported Chain Ids are: ${supportedChains}`}</div>

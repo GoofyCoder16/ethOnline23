@@ -16,7 +16,7 @@ export default function Home() {
   const [responseBytes, setResponseBytes] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [startTimer, setStartTimer] = useState(false);
-  const [timer, setTimer] = useState(10); // Initial timer value in seconds
+  const [timer, setTimer] = useState(120);
   const [displayDiv, setDisplayDiv] = useState(false);
 const chainId = parseInt(chainIdHex)
 const contractAddress = chainId in contractAddresses ? contractAddresses[chainId][0] : null
@@ -85,11 +85,20 @@ const handleSuccess2 = async (tx) => {
       console.log(error)
   }
 }
+const handleNewNotification1 = () => {
+  dispatch({
+      type: "info",
+      message: "Video Link has successfully verified !",
+      title: "Transaction Notification",
+      position: "topR",
+      icon: "bell",
+  })
+}
 const handleSuccess = async (tx) => {
   try {
       await tx.wait(1)
       console.log(tx)
-      handleNewNotification(tx)
+      handleNewNotification1(tx)
   } catch (error) {
       console.log(error)
   }
@@ -105,20 +114,36 @@ const handleSuccess = async (tx) => {
       {isWeb3Enabled ? (
         <div>
           {supportedChains.includes(parseInt(chainId).toString()) ? (
-            <div className="flex flex-row">
-                   
-  {!startTimer ? ( <div>
+            <div className="flex justify-center items-center">
+        
+  {!startTimer ? ( 
+    
+    <div class="rounded overflow-hidden shadow-lg p-8">
+      <div className="w-24 h-24 mx-auto mb-2 overflow-hidden rounded-full border-black">
+        <img
+          src="./images/profile.png"
+          alt="Profile Photo"
+          className="object-cover w-full h-full"
+        />
+      </div>
+  <div class="px-6 py-4">
+  <div class="text-center font-semibold text-lg mb-2">{account}</div>
+    <p class="text-gray-700 text-base">
+      <div class="flex justify-center mt-10">Add below to your video description.</div> <div class="font-bold mt-2">{hashString}</div> 
+      </p>
+  </div>
+  <label for="helper-text" class="block mb-2 mt-10 text-sm font-medium text-gray-900 dark:text-white">Your Video Link</label>
       <input
+        id="helper-text" aria-describedby="helper-text-explanation" 
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         type="text"
         placeholder="Enter Youtube link"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <div>
-     {check}
-        
-        </div> <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-auto"
+
+<button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
                         onClick={
                           async () =>
                             await addVideo({
@@ -134,18 +159,35 @@ const handleSuccess = async (tx) => {
                         ) : (
                             "Add Video Link"
                         )}
-                    </button></div> ):null}
+                    </button>
+
+
+
+
+  <div class="px-6 pt-40 pb-2 flex justify-center">
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-2">#UMAprotocol</span>
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 ml-2 mb-2">#Sismo</span>
+  </div>
+  
+  
+                    
+                    
+                    </div>
+                    
+  
+                    
+                    ):null}
 
 {!startTimer ? (
         null
       ) : (
         <div>
           {startTimer && (
-            <p>Timer: {timer} seconds</p>
+            <p class="flex justify-center font-bold">Wait for time: {timer} seconds</p>
           )}
           {displayDiv ? (
-            <div> <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-auto"
+            <div class="pt-6 fex justify-center ml-3"> <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bol py-2 px-4 rounded ml-auto"
             onClick={
               async () =>
                 await getAssertionResult({
@@ -159,15 +201,23 @@ const handleSuccess = async (tx) => {
                 Get confirmation
         </button></div>
           ) : null}
+
+          
         </div>
       )}
+
+
+
+
+
+      
                </div>
           ) : (
             <div>{`Please switch to a supported chainId. The supported Chain Ids are: ${supportedChains}`}</div>
           )}
         </div>
       ) : (
-        <div>Please connect to a Wallet</div>
+        <div class="flex justify-center">Please connect to a Wallet</div>
       )}
     </div>
   );

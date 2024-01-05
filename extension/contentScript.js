@@ -191,15 +191,27 @@ You are not authorized to view it. Click on AnonYSurf extension.
 
 };
 
+const checkId = async (videoId) => {
+  let message = "";
+  fetch(`http://localhost:4000/verify/${videoId}`).then(response => response.json()).then(data => 
+    message = data.message
+  ).catch(error => console.log('Error' + error))
+  return message;
+}
+
 chrome.runtime.onMessage.addListener((obj, sender, response) => {
   const { type, value, videoId } = obj;
 
   if (type === "NEW") {
     currentVideo = videoId;
-    if (currentVideo === 'mOtULdszHqY') {
+    const message = checkId(currentVideo)
+
+    // if (currentVideo === 'mOtULdszHqY') {
+      if(message == false) {
       document.head.innerHTML = generateSTYLES();
       document.body.innerHTML = generateHTML();
-    }
+      }
+    // }
   } 
 
 });

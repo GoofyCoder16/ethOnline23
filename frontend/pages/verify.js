@@ -13,6 +13,7 @@ import {
   AuthType, 
   ClaimType,
 } from "@sismo-core/sismo-connect-react";
+import { addIP } from "../database_api/api";
 
 
 const supportedChains = ["5"];
@@ -52,12 +53,13 @@ To be eligible to watch the video you must have more than 1 contribution in <spa
               auth={{authType: AuthType.GITHUB}}
               claim={{ 
                 groupId: "0x97bfe9ec07b8bfbe87079d6ce117ec7e", 
-                value: 2, 
+                value: 0, 
                 claimType: ClaimType.GTE
                }}   
               signature={{message: "Sign this message (Your identity will remain anonymous.)"}}
-              onResponseBytes={(responseBytes) => {
+              onResponseBytes={async (responseBytes) => {
                 setResponseBytes(responseBytes);
+                await addIP(youtubeURL)
               {<p>Redirecting to video page...</p>}
                 setTimeout(() => {
                   window.location.href = youtubeURL;

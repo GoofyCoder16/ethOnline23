@@ -5,6 +5,8 @@ import { useMoralis, useWeb3Contract  } from "react-moralis";
 import {useState,useEffect} from 'react';
 import { useNotification } from "web3uikit"
 import { ethers } from "ethers"
+import { addLink } from "../database_api/api";
+
 
 
 
@@ -16,7 +18,7 @@ export default function Home() {
   const [responseBytes, setResponseBytes] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [startTimer, setStartTimer] = useState(false);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(1);
   const [displayDiv, setDisplayDiv] = useState(false);
 const chainId = parseInt(chainIdHex)
 const contractAddress = chainId in contractAddresses ? contractAddresses[chainId][0] : null
@@ -78,6 +80,7 @@ const { runContractFunction: getAssertionResult } = useWeb3Contract({
 const handleSuccess2 = async (tx) => {
   try {
       await tx.wait(1)
+      // await addLink(inputValue)
       console.log(tx)
       handleNewNotification(tx)
      handleStartTimer();
@@ -99,6 +102,7 @@ const handleSuccess = async (tx) => {
       await tx.wait(1)
       console.log(tx)
       handleNewNotification1(tx)
+      await addLink(inputValue)
   } catch (error) {
       console.log(error)
   }
@@ -145,12 +149,12 @@ const handleSuccess = async (tx) => {
 <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
                         onClick={
-                          async () =>
+                          async () => {
                             await addVideo({
                                 onSuccess: handleSuccess2,
                                 onError: (error) => console.log(error),
                             })
-            
+                          }
                         }
                         disabled={isLoading || isFetching}
                     >
